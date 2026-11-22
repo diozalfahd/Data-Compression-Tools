@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Compression Tools</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header class="header">
+        <div class="logo">🗜️</div>
+        <h1>Data Compression Tools</h1>
+        <p>Aplikasi kompresi dan dekompresi data menggunakan Python</p>
+    </header>
+
+    <main class="main-grid">
+
+        <!-- CARD KOMPRESI -->
+        <section class="card">
+            <div class="card-icon">📦</div>
+            <h2>Kompresi</h2>
+            <p class="description">
+                Pilih file atau folder yang ingin dikompresi.
+            </p>
+
+            <form id="compressForm"
+                  action="/compress"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                <label for="jenisKompresi">Jenis Kompresi</label>
+
+                <select id="jenisKompresi" name="jenis">
+                    <option value="file">Satu File</option>
+                    <option value="folder">Satu Folder</option>
+                </select>
+
+                <!-- INPUT SATU FILE -->
+                <div class="upload-box" id="fileBox">
+                    <label for="fileInput">Pilih File</label>
+                    <input
+                        type="file"
+                        id="fileInput"
+                        name="file"
+                        required
+                    >
+                </div>
+
+                <!-- INPUT FOLDER -->
+                <div class="upload-box hidden" id="folderBox">
+                    <label for="folderInput">Pilih Folder</label>
+                    <input
+                        type="file"
+                        id="folderInput"
+                        name="files"
+                        webkitdirectory
+                        directory
+                        multiple
+                    >
+                    <small>Pilih folder yang berisi file yang ingin dikompresi.</small>
+
+                    <label for="folderName" class="folder-name-label">
+                        Nama Hasil Kompresi
+                    </label>
+                    <input
+                        type="text"
+                        id="folderName"
+                        name="folder_name"
+                        placeholder="Contoh: tugas_kuliah"
+                        value="folder"
+                    >
+                </div>
+
+                <label for="algoritma">Algoritma Kompresi</label>
+
+                <select id="algoritma" name="algoritma" required>
+                    <option value="RLE">RLE</option>
+                    <option value="Huffman">Huffman</option>
+                    <option value="LZ77">LZ77</option>
+                </select>
+
+                <button type="submit" class="btn btn-primary">
+                    Mulai Kompresi
+                </button>
+
+            </form>
+        </section>
+
+
+        <!-- CARD DEKOMPRESI -->
+        <section class="card">
+            <div class="card-icon">📂</div>
+            <h2>Dekompresi</h2>
+            <p class="description">
+                Kembalikan file atau folder ke bentuk semula.
+            </p>
+
+            <form id="decompressForm"
+                  action="/decompress"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                <label for="jenisDekompresi">Jenis Dekompresi</label>
+
+                <select id="jenisDekompresi" name="jenis">
+                    <option value="file">File Biasa</option>
+                    <option value="folder">Folder</option>
+                </select>
+
+                <div class="upload-box">
+                    <label for="decompressInput">Pilih File Kompresi</label>
+                    <input
+                        type="file"
+                        id="decompressInput"
+                        name="file"
+                        required
+                    >
+                    <small id="decompressHint">
+                        Pilih file hasil kompresi satu file.
+                    </small>
+                </div>
+
+                <button type="submit" class="btn btn-secondary">
+                    Mulai Dekompresi
+                </button>
+
+            </form>
+        </section>
+
+    </main>
+
+
+    <!-- HASIL PROSES -->
+    {% if error %}
+    <section class="result-card error-card">
+        <h2>Proses Gagal</h2>
+        <p>{{ error }}</p>
+    </section>
+    {% endif %}
+
+
+    {% if nama_hasil %}
+    <section class="result-card success-card">
+
+        <h2>Proses Berhasil!</h2>
+        <p class="result-filename">{{ nama_hasil }}</p>
+
+        {% if mode == "kompresi" or mode == "kompresi_folder" %}
+
+        <div class="result-grid">
+
+            <div class="result-item">
+                <span>Ukuran Awal</span>
+                <strong>{{ ukuran_awal }} byte</strong>
+            </div>
+
+            <div class="result-item">
+                <span>Ukuran Hasil</span>
+                <strong>{{ ukuran_akhir }} byte</strong>
+            </div>
+
+            <div class="result-item">
+                <span>Rasio Kompresi</span>
+                <strong>{{ rasio }}%</strong>
+            </div>
+
+            <div class="result-item">
+                <span>Algoritma</span>
+                <strong>{{ algoritma }}</strong>
+            </div>
+
+            {% if mode == "kompresi_folder" %}
+            <div class="result-item">
+                <span>Jumlah File</span>
+                <strong>{{ jumlah_file }} file</strong>
+            </div>
+            {% endif %}
+
+            <div class="result-item">
+                <span>Waktu Proses</span>
+                <strong>{{ waktu }} detik</strong>
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="result-grid">
+
+            <div class="result-item">
+                <span>Ukuran Hasil</span>
+                <strong>{{ ukuran_akhir }} byte</strong>
+            </div>
+
+            <div class="result-item">
+                <span>Waktu Proses</span>
+                <strong>{{ waktu }} detik</strong>
+            </div>
+
+        </div>
+
+        {% endif %}
+
+        <a class="btn btn-download"
+           href="{{ url_for('download', nama_file=nama_hasil) }}">
+            ⬇ Download Hasil
+        </a>
+
+    </section>
+    {% endif %}
+
+
+    <footer>
+        <p>Data Compression Tools | RLE • Huffman • LZ77</p>
+    </footer>
+
+</div>
+
+
+<script>
+    // =================================
+    // PILIH FILE ATAU FOLDER KOMPRESI
+    // =================================
+
+    const jenisKompresi = document.getElementById("jenisKompresi");
+    const compressForm = document.getElementById("compressForm");
+
+    const fileBox = document.getElementById("fileBox");
+    const folderBox = document.getElementById("folderBox");
+
+    const fileInput = document.getElementById("fileInput");
+    const folderInput = document.getElementById("folderInput");
+
+    function ubahJenisKompresi() {
+
+        if (jenisKompresi.value === "file") {
+
+            compressForm.action = "/compress";
+
+            fileBox.classList.remove("hidden");
+            folderBox.classList.add("hidden");
+
+            fileInput.required = true;
+            folderInput.required = false;
+
+        } else {
+
+            compressForm.action = "/compress-folder";
+
+            fileBox.classList.add("hidden");
+            folderBox.classList.remove("hidden");
+
+            fileInput.required = false;
+            folderInput.required = true;
+
+        }
+    }
+
+    jenisKompresi.addEventListener("change", ubahJenisKompresi);
+
+
+    // =================================
+    // PILIH FILE ATAU FOLDER DEKOMPRESI
+    // =================================
+
+    const jenisDekompresi = document.getElementById("jenisDekompresi");
+    const decompressForm = document.getElementById("decompressForm");
+
+    const decompressHint = document.getElementById("decompressHint");
+
+    function ubahJenisDekompresi() {
+
+        if (jenisDekompresi.value === "file") {
+
+            decompressForm.action = "/decompress";
+
+            decompressHint.textContent =
+                "Pilih file hasil kompresi satu file.";
+
+        } else {
+
+            decompressForm.action = "/decompress-folder";
+
+            decompressHint.textContent =
+                "Pilih file hasil kompresi folder.";
+
+        }
+    }
+
+    jenisDekompresi.addEventListener("change", ubahJenisDekompresi);
+
+</script>
+
+</body>
+</html>
+\

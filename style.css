@@ -1,0 +1,290 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #0b1120;
+    color: #ffffff;
+    min-height: 100vh;
+}
+
+.container {
+    width: 90%;
+    max-width: 1180px;
+    margin: auto;
+    padding: 45px 0 25px;
+}
+
+/* HEADER */
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo {
+    font-size: 45px;
+    margin-bottom: 10px;
+}
+
+.header h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.header p {
+    color: #94a3b8;
+    font-size: 15px;
+}
+
+/* CARD */
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.card {
+    background: #162136;
+    border: 1px solid #293950;
+    border-radius: 17px;
+    padding: 32px;
+    transition: 0.2s;
+}
+
+.card:hover {
+    border-color: #0ea5e9;
+}
+
+.card-icon {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+.description {
+    color: #94a3b8;
+    margin-bottom: 28px;
+    line-height: 1.5;
+}
+
+/* FORM */
+
+form label {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+select,
+input[type="text"],
+input[type="file"] {
+    width: 100%;
+    background: #0b1120;
+    color: white;
+    border: 1px solid #35445c;
+    border-radius: 9px;
+    padding: 13px;
+    margin-bottom: 22px;
+    font-size: 14px;
+}
+
+select {
+    cursor: pointer;
+}
+
+input[type="file"] {
+    cursor: pointer;
+}
+
+.upload-box {
+    border: 1px dashed #40516a;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 22px;
+    background: rgba(11, 17, 32, 0.3);
+}
+
+.upload-box input {
+    margin-bottom: 5px;
+}
+
+.upload-box small {
+    display: block;
+    color: #94a3b8;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-top: 8px;
+}
+
+.folder-name-label {
+    margin-top: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* BUTTON */
+
+.btn {
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 9px;
+    padding: 15px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-primary {
+    background: #087caf;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #0698d6;
+}
+
+.btn-secondary {
+    background: #475569;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #64748b;
+}
+
+/* HASIL */
+
+.result-card {
+    margin-top: 35px;
+    border-radius: 16px;
+    padding: 30px;
+    background: #162136;
+}
+
+.error-card {
+    border: 1px solid #ef4444;
+}
+
+.error-card h2 {
+    color: #ff6969;
+    margin-bottom: 12px;
+}
+
+.error-card p {
+    color: #fca5a5;
+    line-height: 1.5;
+}
+
+.success-card {
+    border: 1px solid #22c55e;
+}
+
+.success-card h2 {
+    color: #4ade80;
+    margin-bottom: 12px;
+}
+
+.result-filename {
+    color: #cbd5e1;
+    margin-bottom: 25px;
+    overflow-wrap: anywhere;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.result-item {
+    background: #0b1120;
+    border: 1px solid #293950;
+    padding: 18px;
+    border-radius: 10px;
+}
+
+.result-item span {
+    display: block;
+    color: #94a3b8;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.result-item strong {
+    font-size: 15px;
+    overflow-wrap: anywhere;
+}
+
+.btn-download {
+    background: #16a34a;
+    color: white;
+    max-width: 250px;
+}
+
+.btn-download:hover {
+    background: #15803d;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    margin-top: 45px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 800px) {
+
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .result-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .header h1 {
+        font-size: 25px;
+    }
+
+    .card {
+        padding: 23px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .container {
+        width: 92%;
+        padding-top: 25px;
+    }
+
+    .result-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card h2 {
+        font-size: 21px;
+    }
+}
